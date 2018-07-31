@@ -3,3 +3,5 @@ __pyc*
 *.pyc
 data_migration*
 .jshintrc
+.eslintrc.json
+package.json

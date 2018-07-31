@@ -5,7 +5,7 @@ function addArticleForm(){
         addTrigger = articlesContainer.querySelector('#addArticleForm'),
         cloningBase = articlesContainer.querySelector('.articleForm'),
         articlesCounter = articlesContainer
-          .querySelector('#id_form-TOTAL_FORMS');
+            .querySelector('#id_form-TOTAL_FORMS');
 
     // assign click event which will add new article form
     addTrigger.addEventListener('click', addArticle);
@@ -13,7 +13,7 @@ function addArticleForm(){
     function addArticle(event){
         event.preventDefault();
         // create new blank form
-        let newForm = cloningBase.cloneNode(true);
+        let newForm = cloningBase.cloneNode(true),
             articlesCount = parseInt(articlesCounter.value);
         // increase management form total count
         articlesCounter.setAttribute('value', articlesCount + 1);
@@ -69,7 +69,7 @@ function addArticleForm(){
             input.setAttribute('name', newName);
             // leave 'select' tag value as it is when cloning forms and
             // don't clear inputs when deleting other form
-            if ( input.tagName!=='SELECT' && (!(down)) ) {input.value = ''}
+            if ( input.tagName!=='SELECT' && (!(down)) ) {input.value = '';}
         }
         for (let i=0; i<labels.length; i++) {
             let label = labels[i],
@@ -81,12 +81,12 @@ function addArticleForm(){
     function filterForms(formDiv){
         function filter(formDiv){
             // return true if formDiv has articleForm class
-            if (formDiv.classList.contains('articleForm')) {return formDiv}
+            if (formDiv.classList.contains('articleForm')) {return formDiv;}
         }
         let filteredForms = [];
         while (formDiv = formDiv.nextElementSibling) {
-            if (filter(formDiv)) {filteredForms.push(formDiv)} else {break}}
-    return filteredForms ? filteredForms : false
+            if (filter(formDiv)) {filteredForms.push(formDiv);} else {break;}}
+        return filteredForms ? filteredForms : false;
     }
 }
 
@@ -137,37 +137,37 @@ function searchPartner(){
 
     // filter search list of partners with already typed letters
     inputCompanyName.addEventListener('keyup', filterSearchList);
-    function filterSearchList(event){
+    function filterSearchList(){
         let typed = inputCompanyName.value,
             partners = searchList.querySelectorAll('p');
         for (let i=0; i<partners.length; i++){
-          if (partners[i].innerHTML.toLowerCase().indexOf(typed) > -1){
-            partners[i].style.display='';
-          }else{
-            partners[i].style.display='none';
-          }
+            if (partners[i].innerHTML.toLowerCase().indexOf(typed) > -1){
+                partners[i].style.display='';
+            }else{
+                partners[i].style.display='none';
+            }
         }
 
     }
 }
 
 function calculateGrossSum(){
-  /* calculate sum of gross valus of all articles */
-  let grossSum = document.getElementById('id_amount_gross'),
-      articlesContainer = document.getElementById('articleFormsContainer');
-  // set gross sum ass readonly input
-  grossSum.setAttribute('readonly', true);
+    /* calculate sum of gross valus of all articles */
+    let grossSum = document.getElementById('id_amount_gross'),
+        articlesContainer = document.getElementById('articleFormsContainer');
+    // set gross sum ass readonly input
+    grossSum.setAttribute('readonly', true);
 
-  articlesContainer.addEventListener('focusout', addAmounts);
-  // when gross amount of article was typed add it to gross sum
-  function addAmounts(event){
-      if (event.target.getAttribute('name').indexOf('amount_gross') > -1){
-        let addValue = event.target.value,
-            addAmount = parseInt(addValue) ? parseInt(addValue) : 0,
-            oldSum = parseInt(grossSum.value) ? parseInt(grossSum.value) : 0;
-        grossSum.value = parseInt(addAmount) + oldSum;
-      }
-  }
+    articlesContainer.addEventListener('focusout', addAmounts);
+    // when gross amount of article was typed add it to gross sum
+    function addAmounts(event){
+        if (event.target.getAttribute('name').indexOf('amount_gross') > -1){
+            let addValue = event.target.value,
+                addAmount = parseInt(addValue) ? parseInt(addValue) : 0,
+                oldSum = parseInt(grossSum.value) ? parseInt(grossSum.value) : 0;
+            grossSum.value = parseInt(addAmount) + oldSum;
+        }
+    }
 
 }
 
