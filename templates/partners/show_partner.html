@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<p>detail view</p>
+<hr>
+{% for info_name, info_value in partner.items %}
+{% if forloop.first %}
+{% else %}
+<p><b>{{ info_name }}</b> : {{ info_value }}</p>
+{% endif %}
+{% endfor %}
+<p><a href="{% url 'partners-app:edit-url' partner.id %}">
+    edytuj</a></p>
+<p><a href="{% url 'partners-app:delete-url' partner.id %}">
+    usun</a></p>
+<p><a href="{% url 'partners-app:all-url' %}">wróć do listy</a></p>
+{% endblock %}

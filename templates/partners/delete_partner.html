@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<p>usuń partnera</p>
+<form method="POST"
+      action="{% url 'partners-app:delete-url' partner_id %}">
+    {{ form.as_p }}
+    <input type="submit" value="usuń">
+    {% csrf_token %}
+</form>
+<p><a href="{% url 'partners-app:show-url' partner_id %}">wróć</a></p>
+{% endblock %}

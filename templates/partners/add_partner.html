@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<p>dodaj partnera</p>
+<form method="POST" action="{% url 'partners-app:add-url' %}">
+    {{ form.as_p }}
+    <input type="submit" value="dodaj">
+    {% csrf_token %}
+</form>
+{% endblock %}

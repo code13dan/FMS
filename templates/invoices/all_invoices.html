@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for invoice in invoices %}
+<p>{{ invoice }}</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,5 @@
+*.sqlite3
+__pyc*
+*.pyc
+data_migration*
+.jshintrc

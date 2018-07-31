@@ -1,0 +1,105 @@
+/* invoice form css ############################*/
+form {
+    border-radius: 13px;
+    background-color: #b9e7ef85;
+    padding: 7px;
+}
+label {
+    margin-left: 20px;
+}
+form .row {
+    margin-top: 13px;
+}
+button {
+    border-radius: 7px;
+}
+button:focus {
+    outline: none;
+}
+button[type="submit"] {
+    background-color: #32ec32c9;
+}
+.container {
+    margin: 20px auto;
+}
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: transparent;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid grey;
+    padding-left: 13px;
+    padding-bottom: 4px;
+}
+select:focus {
+    outline: none;
+}
+#formInsertHere {
+    margin-top: 23px;
+}
+input[type="text"] {
+    border: none;
+    border-bottom: 1px solid grey;
+    width: 100%;
+    background-color: transparent;
+    transition: border-bottom 0.3s;
+}
+input[type="text"]:focus {
+    outline: none;
+    border-bottom: 3px solid #0049ff85;
+}
+.formFieldGroup:focus-within:not(.select) {
+    transition: font-size 0.3s;
+    font-size: 20px;
+}
+.errorDiv > ul {
+    list-style: none;
+    background-color: #ffa500b8;
+    border-radius: 13px;
+}
+/*
+Partner part
+*/
+#partnerFormContainer {
+    background-color: #0000ff2e;
+    border-radius: 13px;
+    padding: 7px;
+}
+#searchList {
+    max-height: 300px;
+    overflow-y: auto;
+}
+#searchList > p {
+    margin-bottom: 0px;
+    padding: 4px;
+}
+/*
+Article part
+*/
+#articleFormsContainer > div:nth-child(1){
+    margin-bottom: -34px;
+}
+button.removeArticle {
+    background-color: #ed1462b5;
+}
+#addArticleForm {
+    background-color: #ffff0094;
+}
+.hide {
+    display: none;
+}
+.articleForm {
+    margin-top: 27px;
+    padding: 7px;
+    border-radius: 13px;
+    background-color: #ffc0cb82;
+}
+/*
+Invoice part
+*/
+#invoiceFormContainer {
+    margin-bottom: 21px;
+}
+/*            #################################*/

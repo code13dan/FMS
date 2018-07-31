@@ -1,0 +1,80 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block content %}
+<form action="{% url 'invoices-app:add-url' %}" method="POST">
+    <div id="partnerFormContainer">
+        {% for field in partner_form %}
+        {% if field.name == 'company_name' %}
+            <div class="row col-md-12 formFieldGroup select">
+        {% else %}
+            <div class="row col-md-12 formFieldGroup">
+        {% endif %}
+            <div class="col-md-12 errorDiv">{{ field.errors }}</div>
+            <div class="col-md-4">{{ field.label_tag }}</div>
+            <div class="col-md-8">
+                {{ field }}
+                {% if forloop.first %}
+                    <div id="searchList" class="hide">
+                        {% for partner in partners_list %}
+                            <p data-id="{{ partner.id }}">{{ partner.company_name }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="invoiceFormContainer">
+        {% for field in invoice_form %}
+        {% if field.name == 'type' or field.name == 'payment_type' %}
+        <div class="row col-md-12 formFieldGroup select">
+        {% else %}
+        <div class="row col-md-12 formFieldGroup">
+        {% endif %}
+            <div class="col-md-12 errorDiv">{{ field.errors }}</div>
+            <div class="col-md-4">{{ field.label_tag }}</div>
+            <div class="col-md-8">{{ field }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div id="articleFormsContainer">
+        <div class="d-flex justify-content-center">
+            <p>Pozycje na fakturze:</p>
+        </div>
+        {{ article_form_set.management_form }}
+        {% for article_form in article_form_set %}
+            <div class="articleForm">
+                {% for field in article_form %}
+                {% if field.name == 'destination' %}
+                <div class="row col-md-12 formFieldGroup select">
+                {% else %}
+                <div class="row col-md-12 formFieldGroup">
+                {% endif %}
+                        <div class="col-md-12 errorDiv">{{ field.errors }}</div>
+                        <div class="col-md-4">{{ field.label_tag }}</div>
+                        <div class="col-md-8">{{ field }}</div>
+                    </div>
+                {% endfor %}
+                <div class="row justify-content-center">
+                    {% if forloop.first %}
+                    <button class="removeArticle hide col-md-5">Usuń artykuł</button>
+                    {% else %}
+                    <button class="removeArticle col-md-5">Usuń artykuł</button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="d-flex justify-content-around" id="formInsertHere">
+            <button class="col-md-4" type="submit">Zapisz fakturę</button>
+            <button id="addArticleForm" class="col-md-4">Dodaj artykuł</button>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/invoice.js' %}"></script>
+{% endblock %}

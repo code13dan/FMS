@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<p>edytuj partnera</p>
+<form method="POST"
+      action="{% url 'partners-app:edit-url' partner_id %}">
+    {{ form.as_p }}
+    <input type="submit" value="zmień">
+    {% csrf_token %}
+</form>
+{% endblock %}

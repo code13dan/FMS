@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<p><a href="{% url 'partners-app:add-url' %}">dodaj partnera</a></p>
+<table>
+    <thead>
+    <tr>
+        <th>nazwa firmy</th>
+        <th>adres</th>
+        <th>telefon</th>
+        <th>NIP</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for partner in all_partners %}
+    <tr>
+        <td>{{ partner.company_name }}</td>
+        <td>{{ partner.address }}</td>
+        <td>{{ partner.phone }}</td>
+        <td>{{ partner.nip }}</td>
+        <td>
+            <a href="{% url 'partners-app:show-url' partner.id %}">
+            edytuj</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
