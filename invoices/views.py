@@ -15,9 +15,11 @@ from partners.models import Partner
 def all_invoices(request):
     """Show all invoices"""
 
+    invoices = Invoice.objects.values()
     articles_json = Invoice.objects.values_list('article', flat=True)
     articles = [json.loads(article) for article in articles_json]
-    ctx = {'invoices': articles}
+    ctx = {'invoices': invoices,
+           'articles': articles}
 
     return render(request, 'invoices/all_invoices.html', ctx)
 
@@ -26,12 +28,21 @@ def add_invoice(request):
     """Add invoice"""
 
     if request.method == 'POST':
+        # check if it's new partner or already existing
+        try:
+            partner_id = int(request.POST['partner_id'])
+            partner = Partner.objects.get(pk=partner_id)
+            partner_form = PartnerForm(request.POST, instance=partner)
+        except ValueError:
+            partner_form = PartnerForm(request.POST)
+
         invoice_form = InvoiceForm(request.POST)
         article_formset = ArticleFormSet(request.POST)
-        partner_form = PartnerForm(request.POST)
         if article_formset.is_valid() and\
                 invoice_form.is_valid() and\
                 partner_form.is_valid():
+            # save new/changed partner instance
+            partner_instance = partner_form.save()
             # get all articles from invoice and save them as JSON string in
             # article field in Invoice model
             articles = []
@@ -41,8 +52,13 @@ def add_invoice(request):
                      'article_type': form.cleaned_data['article_type'],
                      'destination': form.cleaned_data['destination']}
                     )
-            articles = json.dumps(articles)
-            raise ValueError()
+            articles_json = json.dumps(articles)
+            # create invoice instance with POST partner and articles
+            invoice_instance = invoice_form.save(commit=False)
+            invoice_instance.company = partner_instance
+            invoice_instance.article = articles_json
+            invoice_instance.save()
+            return redirect('invoices-app:all-url')
 
     else:
         article_formset = ArticleFormSet()

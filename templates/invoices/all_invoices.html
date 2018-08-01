@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 {% for invoice in invoices %}
-<p>{{ invoice }}</p>
+    {% for entry_name, entry_value in invoice.items %}
+        <p>{{ entry_name }} : {{ entry_value }}</p>
+    {% endfor %}
+    <hr>
 {% endfor %}
 {% endblock %}

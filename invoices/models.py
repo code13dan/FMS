@@ -21,7 +21,8 @@ class Invoice(models.Model):
                                 verbose_name='Firma')
     enter_date = models.DateField(default=timezone.now,
                                   verbose_name='Wprowadzona')
-    number = models.CharField(max_length=50, verbose_name='Numer faktury')
+    number = models.CharField(max_length=50, verbose_name='Numer faktury',
+                              unique=True)
     type = models.CharField(max_length=1, choices=INVOICES_TYPES, default='K',
                             verbose_name='Rodzaj faktury')
     article = models.TextField(null=True)

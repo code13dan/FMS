@@ -43,6 +43,7 @@ input[type="text"] {
     border: none;
     border-bottom: 1px solid grey;
     width: 100%;
+    padding-left: 13px;
     background-color: transparent;
     transition: border-bottom 0.3s;
 }

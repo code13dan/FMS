@@ -46,7 +46,7 @@ def show_partner(request, partner_id):
 
 
 def edit_partner(request, partner_id):
-    """Edit detail informations about chosen partner"""
+    """Edit detail information about chosen partner"""
 
     partner = Partner.objects.get(pk=partner_id)
     if request.method == 'POST':

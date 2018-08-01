@@ -42,7 +42,7 @@ function addArticleForm(){
             formsToChangeIDs = filterForms(thisArticleForm);
         // decrease management form total count
         articlesCounter.setAttribute('value', articlesCount - 1);
-        // change next article forms IDs - by '-1'
+        // change next article forms IDs - by '-1', if they exists
         if (formsToChangeIDs){
             formsToChangeIDs.forEach(function(el){
                 changeFormIDs(el, 1);
@@ -77,14 +77,16 @@ function addArticleForm(){
             label.setAttribute('for', newFor);
         }
     }
-    // return list of next article forms in DOM or return itself
+    // return list of next article forms in DOM or return false
     function filterForms(formDiv){
         function filter(formDiv){
             // return true if formDiv has articleForm class
             if (formDiv.classList.contains('articleForm')) {return formDiv;}
         }
         let filteredForms = [];
-        while (formDiv = formDiv.nextElementSibling) {
+        // while (formDiv = formDiv.nextElementSibling) {
+        while (true) {
+            formDiv = formDiv.nextElementSibling;
             if (filter(formDiv)) {filteredForms.push(formDiv);} else {break;}}
         return filteredForms ? filteredForms : false;
     }
@@ -97,6 +99,7 @@ function searchPartner(){
         inputAddress = formContainer.querySelector('#id_address'),
         inputPhone = formContainer.querySelector('#id_phone'),
         inputNIP = formContainer.querySelector('#id_nip'),
+        inputPartnerId = formContainer.querySelector('#id_partner_id'),
         searchList = formContainer.querySelector('#searchList');
 
     // show or hide search list by toggling 'hide' class
@@ -122,7 +125,7 @@ function searchPartner(){
                 let partner = JSON.parse(this.responseText);
                 populatePartnerForm(partner);
             });
-            ajax.open('GET', 'http://localhost:8000/partners/get/' + partner_id);
+            ajax.open('GET', 'http://localhost:8000/partners/get/'+partner_id);
             ajax.send();
         }
     }
@@ -133,6 +136,7 @@ function searchPartner(){
         inputAddress.value = partner.address;
         inputPhone.value = partner.phone;
         inputNIP.value = partner.nip;
+        inputPartnerId.value = partner.id;
     }
 
     // filter search list of partners with already typed letters
@@ -155,17 +159,58 @@ function calculateGrossSum(){
     /* calculate sum of gross valus of all articles */
     let grossSum = document.getElementById('id_amount_gross'),
         articlesContainer = document.getElementById('articleFormsContainer');
-    // set gross sum ass readonly input
-    grossSum.setAttribute('readonly', true);
+    initialGrossSum();
+    // set gross sum ass readonly input and set initial value equal sum of all
+    // articles
+    function initialGrossSum(){
+        grossSum.setAttribute('readonly', true);
+        grossSum.value = 0;
+        // get all articles inputs
+        let articlesValues = articlesContainer
+            .querySelectorAll('input[name*="amount"]');
+        articlesValues.forEach(function(article){
+            let articleValue = parseInt(article.value),
+                grossSumValue = parseInt(grossSum.value);
+            articleValue = articleValue ? articleValue : 0;
+            grossSumValue = grossSumValue ? grossSumValue : 0;
+            grossSum.value = grossSumValue + articleValue;
+        });
+    }
 
-    articlesContainer.addEventListener('focusout', addAmounts);
     // when gross amount of article was typed add it to gross sum
+    articlesContainer.addEventListener('focusout', addAmounts);
+    // when changing gross amount of article subtract old value first
+    articlesContainer.addEventListener('focusin', addAmounts);
     function addAmounts(event){
-        if (event.target.getAttribute('name').indexOf('amount_gross') > -1){
-            let addValue = event.target.value,
-                addAmount = parseInt(addValue) ? parseInt(addValue) : 0,
-                oldSum = parseInt(grossSum.value) ? parseInt(grossSum.value) : 0;
-            grossSum.value = parseInt(addAmount) + oldSum;
+        if (event.target.tagName != 'BUTTON'){
+            if (event.target.getAttribute('name').indexOf('amount_gross') > -1){
+                let addAmount = parseInt(event.target.value),
+                    oldSum = parseInt(grossSum.value);
+                
+                oldSum = oldSum ? oldSum : 0;
+                // check if input value was entered
+                addAmount = addAmount ? addAmount : 0;
+                // check if it is changeing action than subtract old value from
+                // gorss sum value
+                if ( oldSum && addAmount && event.type === 'focusin'){
+                    addAmount = -addAmount;
+                } 
+            
+                grossSum.value = addAmount + oldSum;
+            }
+        }
+    }
+
+    // subtract article amount from gross amount when article is remove
+    articlesContainer.addEventListener('click', subtractAmounts);
+    function subtractAmounts(event){
+        if (event.target.classList.contains('removeArticle')){
+            let articleForm = event.target.parentElement.parentElement,
+                // first input is article gross amount
+                subValue = articleForm.querySelector('input').value;
+
+            subValue = subValue ? subValue : 0;
+            grossSum.value = parseInt(grossSum.value) - parseInt(subValue);
         }
     }
 
