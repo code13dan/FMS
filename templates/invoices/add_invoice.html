@@ -6,28 +6,28 @@
 <form action="{% url 'invoices-app:add-url' %}" method="POST">
     <div id="partnerFormContainer">
         {% for field in partner_form %}
-        {% if field.name == 'partner_id' %}
-            {{ field }}
-        {% else %}
-            {% if field.name == 'company_name' %}
-                <div class="row col-md-12 formFieldGroup select">
+            {% if field.name == 'partner_id' %}
+                {{ field }}
             {% else %}
-                <div class="row col-md-12 formFieldGroup">
-            {% endif %}
-                <div class="col-md-12 errorDiv">{{ field.errors }}</div>
-                <div class="col-md-4">{{ field.label_tag }}</div>
-                <div class="col-md-8">
-                    {{ field }}
-                    {% if forloop.first %}
-                        <div id="searchList" class="hide">
-                            {% for partner in partners_list %}
-                                <p data-id="{{ partner.id }}">{{ partner.company_name }}</p>
-                            {% endfor %}
+                {% if field.name == 'company_name' %}
+                    <div class="row col-md-12 formFieldGroup select">
+                {% else %}
+                    <div class="row col-md-12 formFieldGroup">
+                {% endif %}
+                        <div class="col-md-12 errorDiv">{{ field.errors }}</div>
+                        <div class="col-md-4">{{ field.label_tag }}</div>
+                        <div class="col-md-8">
+                            {{ field }}
+                            {% if forloop.first %}
+                                <div id="searchList" class="hide">
+                                    {% for partner in partners_list %}
+                                        <p data-id="{{ partner.id }}">{{ partner.company_name }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                </div>
-            </div>
-        {% endif %}
+                    </div>
+            {% endif %}
         {% endfor %}
     </div>
     <div id="invoiceFormContainer">
@@ -77,8 +77,4 @@
     </div>
     {% csrf_token %}
 </form>
-{% endblock %}
-
-{% block script %}
-<script src="{% static 'js/invoice.js' %}"></script>
 {% endblock %}

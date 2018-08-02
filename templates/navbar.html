@@ -1,0 +1,9 @@
+{% load main_templatetags %}
+<div id="navBar" class="row">
+    <div class="col-3 navItem {% active_nav request 'invoices-app' %}">
+        <a href="{% url 'invoices-app:all-url' %}">Faktury</a></div>
+    <div class="col-3 navItem {% active_nav request 'partners-app' %}">
+        <a href="{% url 'partners-app:all-url' %}">Partnerzy</a></div>
+    <div class="col-3 navItem"><a href="#">Punkty</a></div>
+    <div class="col-3 navItem"><a href="#">Statystyki</a></div>
+</div>

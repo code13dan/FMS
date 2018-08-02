@@ -1,28 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-<p><a href="{% url 'partners-app:add-url' %}">dodaj partnera</a></p>
-<table>
+<table id="partnersTable">
     <thead>
-    <tr>
-        <th>nazwa firmy</th>
-        <th>adres</th>
-        <th>telefon</th>
-        <th>NIP</th>
+    <tr class="row">
+        <th class="col-sm-3">nazwa firmy</th>
+        <th class="col-sm-3">adres</th>
+        <th class="col-sm-3">telefon</th>
+        <th class="col-sm-3">NIP</th>
     </tr>
     </thead>
     <tbody>
     {% for partner in all_partners %}
-    <tr>
-        <td>{{ partner.company_name }}</td>
-        <td>{{ partner.address }}</td>
-        <td>{{ partner.phone }}</td>
-        <td>{{ partner.nip }}</td>
-        <td>
-            <a href="{% url 'partners-app:show-url' partner.id %}">
-            edytuj</a>
-        </td>
+    <tr class="row" data-id="{{ partner.id }}">
+            <td class="col-sm-3">{{ partner.company_name }}</td>
+            <td class="col-sm-3">{{ partner.address }}</td>
+            <td class="col-sm-3">{{ partner.phone }}</td>
+            <td class="col-sm-3">{{ partner.nip }}</td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
+<div id="addOneMore">
+    <a href="{% url 'partners-app:add-url' %}">+</a>
+</div>
 {% endblock %}

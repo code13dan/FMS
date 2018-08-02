@@ -1,9 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
-{% for invoice in invoices %}
-    {% for entry_name, entry_value in invoice.items %}
-        <p>{{ entry_name }} : {{ entry_value }}</p>
+<table>
+    {% for invoice in invoices %}
+        {% if forloop.first %}
+            <thead>
+                <tr class="row">
+                    <th class="col-sm-4">Nr faktury</th>
+                    <th class="col-sm-6">Partner</th>
+                    <th class="col-sm-2">Brutto</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% endif %}
+        <tr class="row">
+            <td class="col-sm-1">
+                <div class="checkPayment
+                    {% if invoice.payment_date %}
+                        yes
+                    {% else %}
+                        no
+                    {% endif %}">
+                </div>
+            </td>
+            <td class="col-sm-4"><a href="{% url 'invoices-app:show-url' invoice.id %}">{{ invoice.number }}</a></td>
+            <td class="col-sm-5"><a href="{% url 'partners-app:show-url' invoice.company_id %}">{{ invoice.company__company_name }}</a></td>
+            <td class="col-sm-2">{{ invoice.amount_gross }}</td>
+        </tr>
     {% endfor %}
-    <hr>
-{% endfor %}
+    </tbody>
+</table>
+<div id="addOneMore">
+    <a href="{% url 'invoices-app:add-url' %}">+</a>
+</div>
 {% endblock %}

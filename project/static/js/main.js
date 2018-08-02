@@ -1,3 +1,11 @@
+/* 
+invoices - adding invoice js
+*/
+if (document.getElementById('articleFormsContainer')){
+    addArticleForm();
+    searchPartner();
+    calculateGrossSum();
+}
 function addArticleForm(){
     /* adding another article form */
     // get base DOM elements
@@ -216,7 +224,21 @@ function calculateGrossSum(){
 
 }
 
+/*
+partners - main table 
+*/
+if (document.getElementById('partnersTable')){
+    makePartnersTrClickable();
+}
+function makePartnersTrClickable(){
+    /* Adds click event to all partners table rows which will redirect to 
+    detail partner view */
+    let tableBody = document.getElementById('partnersTable')
+        .querySelector('tbody');
 
-addArticleForm();
-searchPartner();
-calculateGrossSum();
+    tableBody.addEventListener('click', redirectToPartner);
+    // redirect function which will get partner id from data in row
+    function redirectToPartner(event){
+        console.log(event.target)
+    }
+}

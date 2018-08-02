@@ -15,11 +15,10 @@ from partners.models import Partner
 def all_invoices(request):
     """Show all invoices"""
 
-    invoices = Invoice.objects.values()
-    articles_json = Invoice.objects.values_list('article', flat=True)
-    articles = [json.loads(article) for article in articles_json]
-    ctx = {'invoices': invoices,
-           'articles': articles}
+    invoices = Invoice.objects.select_related('company__company_name')\
+        .values('id', 'number', 'company__company_name', 'amount_gross',
+                'company_id', 'payment_date')
+    ctx = {'invoices': invoices}
 
     return render(request, 'invoices/all_invoices.html', ctx)
 
@@ -74,3 +73,8 @@ def add_invoice(request):
            'article_form_set': article_formset,
            'invoice_form': invoice_form}
     return render(request, 'invoices/add_invoice.html', ctx)
+
+
+def show_invoice(request, invoice_id):
+    print(invoice_id)
+    return redirect('invoices-app:all-url')

@@ -11,7 +11,10 @@
     {% endblock %}
 </head>
 <body>
-    <div class="container">
+    <div id="navBarContainer">
+        {% include 'navbar.html' %}
+    </div>
+    <div class="container main">
         {% if messages %}
             {% for message in messages %}
                 <p class="{{ message.tags }}">{{ message }}</p>
@@ -20,6 +23,7 @@
         {% block content %}
         {% endblock %}
     </div>
+    <script src="{% static 'js/main.js' %}"></script>
     {% block script %}
     {% endblock %}
 </body>
