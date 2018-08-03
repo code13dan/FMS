@@ -1,12 +1,13 @@
 """Invoices app views"""
 
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 
 import json
 
 from .models import Invoice
-from .forms import InvoiceForm, ArticleFormSet
+from .forms import InvoiceForm, ArticleFormSet, SearchForm
 
 from partners.forms import PartnerForm
 from partners.models import Partner
@@ -15,10 +16,24 @@ from partners.models import Partner
 def all_invoices(request):
     """Show all invoices"""
 
-    invoices = Invoice.objects.select_related('company__company_name')\
+    invoices_list = Invoice.objects.select_related('company__company_name')\
         .values('id', 'number', 'company__company_name', 'amount_gross',
                 'company_id', 'payment_date')
-    ctx = {'invoices': invoices}
+
+    paginator = Paginator(invoices_list, 100)
+    requested_page = request.GET.get('page')
+
+    try:
+        invoices = paginator.page(requested_page)
+    except PageNotAnInteger:
+        invoices = paginator.page(1)
+    except EmptyPage:
+        invoices = paginator.page(paginator.num_pages)
+
+    search_form = SearchForm()
+
+    ctx = {'invoices': invoices,
+           'search_form': search_form}
 
     return render(request, 'invoices/all_invoices.html', ctx)
 
@@ -78,3 +93,11 @@ def add_invoice(request):
 def show_invoice(request, invoice_id):
     print(invoice_id)
     return redirect('invoices-app:all-url')
+
+
+def search(request):
+    """Return results of search query"""
+
+
+    raise ValueError('search stop')
+    return

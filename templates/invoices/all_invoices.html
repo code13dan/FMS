@@ -32,4 +32,18 @@
 <div id="addOneMore">
     <a href="{% url 'invoices-app:add-url' %}">+</a>
 </div>
+<div id="filterTrigger">
+    <div id="filterContainer">
+        <form action="{% url 'invoices-app:search-url' %}">
+            {% for field in search_form %}
+                {{ field }}
+            {% endfor %}
+            <button type="submit">Filtruj</button>
+        </form>
+        <div class="row">
+            <div class="col-8 search" contenteditable='true'>hi there</div>
+        </div>
+    </div>
+</div>
+{% include 'footer_pagination.html' with pagination=invoices %}
 {% endblock %}

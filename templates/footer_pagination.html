@@ -1,0 +1,23 @@
+</div>
+<div id="paginationContainer">
+<div class="row">
+    <div class="col-sm-2">
+        {% if pagination.has_previous %}
+            <a href="?page={{ pagination.previous_page_number }}">
+                Poprzednia
+            </a>
+        {% endif %}
+    </div>
+    <div class="col-sm-8">
+        <a href="#">
+        Strona {{ pagination.number }} z {{ pagination.paginator.num_pages }}
+        </a>
+    </div>
+    <div class="col-sm-2">
+        {% if pagination.has_next %}
+            <a href="?page={{ pagination.next_page_number }}">
+                Następna
+            </a>
+        {% endif %}
+    </div>
+</div>

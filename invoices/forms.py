@@ -39,3 +39,9 @@ class ArticleForm(forms.Form):
 
 
 ArticleFormSet = forms.formset_factory(ArticleForm, max_num=20)
+
+
+class SearchForm(forms.Form):
+    """Searching query form"""
+
+    q = forms.CharField(max_length=200, widget=forms.HiddenInput)

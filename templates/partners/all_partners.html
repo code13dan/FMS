@@ -10,7 +10,7 @@
     </tr>
     </thead>
     <tbody>
-    {% for partner in all_partners %}
+    {% for partner in partners %}
     <tr class="row" data-id="{{ partner.id }}">
             <td class="col-sm-3">{{ partner.company_name }}</td>
             <td class="col-sm-3">{{ partner.address }}</td>
@@ -23,4 +23,5 @@
 <div id="addOneMore">
     <a href="{% url 'partners-app:add-url' %}">+</a>
 </div>
+{% include 'footer_pagination.html' with pagination=partners %}
 {% endblock %}

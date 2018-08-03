@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from .models import Partner
 from .forms import PartnerForm, DeleteForm
@@ -13,7 +14,17 @@ def all_partners(request):
     """Show list of all partners"""
 
     partners = Partner.objects.values()
-    ctx = {'all_partners': partners}
+    paginator = Paginator(partners, 100)
+
+    page = request.GET.get('page')
+    try:
+        partners = paginator.page(page)
+    except PageNotAnInteger:
+        partners = paginator.page(1)
+    except EmptyPage:
+        partners = paginator.page(paginator.num_pages)
+
+    ctx = {'partners': partners}
     return render(request, 'partners/all_partners.html', ctx)
 
 

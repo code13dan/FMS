@@ -1,9 +1,15 @@
-/* main ######################################################################*/
+/* Main ######################################################################*/
+html {
+    min-height: 100%;
+    position: relative;
+}
 body {
     background-color: #9cc3ec2b;
 }
 .main {
-    margin-top: 50px;
+    margin-top: 70px;
+    min-height: 78vh;
+    margin-bottom: 73px;
 }
 a {
     color:inherit;
@@ -12,7 +18,29 @@ a:hover {
     text-decoration: none;
     color: inherit;
 }
-/* navbar ####################################################################*/
+/* Pagination footer #########################################################*/
+#paginationContainer {
+    position:absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 60px;
+    background-color: #0000ff29;
+    text-align: center;
+    line-height: 60px;
+}
+#paginationContainer .row {
+    margin: 0px;
+}
+#paginationContainer div[class*='col'] {
+    padding: 0px;
+}
+#paginationContainer a {
+    display: block;
+}
+#paginationContainer a:hover {
+    background-color: yellow;
+}
+/* Navbar ####################################################################*/
 #navBarContainer {
     width: 100%;
     height: 49px;
@@ -41,7 +69,7 @@ a:hover {
 .active {
     background-color: #da00ff47;
 }
-/* invoice form###############################################################*/
+/* Invoice form###############################################################*/
 form {
     border-radius: 13px;
     background-color: #b9e7ef85;
@@ -143,7 +171,7 @@ Invoice part
 #invoiceFormContainer {
     margin-bottom: 21px;
 }
-/* Invoice table view ########################################################*/
+/* Invoice table view + default ##############################################*/
 table {
     width: 100%;
 }
@@ -165,9 +193,7 @@ th {
 }
 thead tr {
     background-color:#efc8c8;
-}
-thead tr:nth-child(even) {
-    background-color:#0000ff45;
+    border-radius: 13px 13px 0 0 ;
 }
 tbody tr:nth-child(2n){
     background-color:#8080803d;
@@ -186,8 +212,9 @@ tbody tr:nth-child(2n-1){
 .no {
     background-color: #ff0000b0;
 }
+/* Adding more bubble in invoices and partners ###############################*/
 #addOneMore {
-    background-color: pink;
+    background-color: #ffc0cb94;
     border-radius: 60px;
     height: 100px;
     width: 100px;
@@ -204,6 +231,32 @@ tbody tr:nth-child(2n-1){
 }
 #addOneMore > a {
     display: block;
+}
+/* Filter in invoices*/
+#filterTrigger {
+    overflow: hidden;
+    width: 4vw;
+    height: 70vh;
+    background-color: #61cac5;
+    position: fixed;
+    top: 20vh;
+    left: -2vw;
+    border-radius: 13px;
+    opacity: 0.4;
+    transition: left .4s, width 1s, opacity .9s;
+}
+#filterTrigger:hover {
+    padding: 10px 10px 10px 30px;
+    left: -1vw;
+    width: 93vw;
+    opacity: 0.9;
+}
+#filterContainer {
+    opacity: 0;
+    transition: opacity .5s;
+}
+#filterTrigger:hover #filterContainer {
+    opacity: 1;
 }
 /* Partners table view #######################################################*/
 #partnersTable tbody tr:hover {
